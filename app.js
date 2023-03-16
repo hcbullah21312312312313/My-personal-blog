@@ -59,9 +59,9 @@ app.post("/compose", function(req, res){
   res.redirect("/");
 });
 const commentsSchema=new mongoose.Schema({
-  name:String,
+  firstName:String,
     username:String,
-  comment:String
+    opinion:String
 })
 const commentModel=mongoose.model('Comment',commentsSchema)
 app.post("/post",async function(req,res){
@@ -70,9 +70,9 @@ app.post("/post",async function(req,res){
   const username=req.body.username
   const comments=req.body.comments
   const newComment=new commentModel({
-    name:name,
+    firstName:name,
     username:username,
-    comment:comments
+    opinion:comments
   })
   
   newComment.save().then(() => console.log('posted'))
@@ -82,9 +82,11 @@ app.post("/post",async function(req,res){
 app.get("/posts/:postName",async function(req, res){
   const requestedTitle = _.lowerCase(req.params.postName);
   var search=await journalElement.find({},{_id:0,title:1,content:1})
-  var commentSearch=await commentModel.find({},{_id:0,name:1,comment:1})
-  commentSearch.forEach(function(comment){
-    
+  var commentSearchRaw=await commentModel.find({},{_id:0,firstName:1,opinion:1})
+  var commentSearch=[]
+    commentSearchRaw.forEach(function(comment){
+      commentSearch.push(comment)
+    })
   
   search.forEach(function(post){
     const storedTitle = _.lowerCase(post.title);
@@ -93,13 +95,12 @@ app.get("/posts/:postName",async function(req, res){
       res.render("post", {
         title: post.title,
         content: post.content,
-        name:comment.name,
-        comment:comment.comment
+        comments:commentSearch
       });
     }
   });
 
-});
+
 
 })
 
