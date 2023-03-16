@@ -11,6 +11,16 @@ const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rho
 const mongoose=require('mongoose')
 mongoose.connect('mongodb+srv://admin:p5W5Rvr28zzQAhWE@cluster0.bp2y7j1.mongodb.net/Journal')
 const app = express();
+function titleCase(str) {
+  var splitStr = str.toLowerCase().split(' ');
+  for (var i = 0; i < splitStr.length; i++) {
+      // You do not need to check if i is larger than splitStr length, as your for does that for you
+      // Assign it back to the array
+      splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+  }
+  // Directly return the joined string
+  return splitStr.join(' '); 
+}
 const mongoSchema=new mongoose.Schema({
   title:
   {
@@ -61,7 +71,8 @@ app.post("/compose", function(req, res){
 const commentsSchema=new mongoose.Schema({
   firstName:String,
     username:String,
-    opinion:String
+    opinion:String,
+    title:String
 })
 const commentModel=mongoose.model('Comment',commentsSchema)
 app.post("/post",async function(req,res){
@@ -69,10 +80,12 @@ app.post("/post",async function(req,res){
   const name=req.body.name
   const username=req.body.username
   const comments=req.body.comments
+  const titleq=req.body.label
   const newComment=new commentModel({
     firstName:name,
     username:username,
-    opinion:comments
+    opinion:comments,
+    title:titleq
   })
   
   newComment.save().then(() => console.log('posted'))
@@ -80,26 +93,32 @@ app.post("/post",async function(req,res){
   res.redirect(req.get('referer'));
 })
 app.get("/posts/:postName",async function(req, res){
-  const requestedTitle = _.lowerCase(req.params.postName);
+    const requestedTitle = _.lowerCase(req.params.postName);
+    const requestedTitlez=titleCase(requestedTitle)
+    
   var search=await journalElement.find({},{_id:0,title:1,content:1})
-  var commentSearchRaw=await commentModel.find({},{_id:0,firstName:1,opinion:1})
+  var titleList=[]
+  search.forEach(function(POST){
+    titleList.push(POST.title)
+  })
+  var commentSearchRaw=await commentModel.find({title:requestedTitlez},{_id:0,firstName:1,opinion:1,title:1})
   var commentSearch=[]
     commentSearchRaw.forEach(function(comment){
       commentSearch.push(comment)
     })
-  
   search.forEach(function(post){
     const storedTitle = _.lowerCase(post.title);
 
     if (storedTitle === requestedTitle) {
+      var titleFinal=titleCase(post.title)
       res.render("post", {
-        title: post.title,
+        title:titleFinal ,
         content: post.content,
         comments:commentSearch
       });
     }
   });
-
+  
 
 
 })
