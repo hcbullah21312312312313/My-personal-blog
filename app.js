@@ -58,22 +58,76 @@ app.post("/compose", function(req, res){
   // posts.push(post)
   res.redirect("/");
 });
-
+const commentsSchema=new mongoose.Schema({
+  name:String,
+    username:String,
+  comment:String
+})
+const commentModel=mongoose.model('Comment',commentsSchema)
+app.post("/post",async function(req,res){
+  const requestedTitle = _.lowerCase(req.params.postName);
+  const name=req.body.name
+  const username=req.body.username
+  const comments=req.body.comments
+  const newComment=new commentModel({
+    name:name,
+    username:username,
+    comment:comments
+  })
+  
+  newComment.save().then(() => console.log('posted'))
+  
+  res.redirect(req.get('referer'));
+})
 app.get("/posts/:postName",async function(req, res){
   const requestedTitle = _.lowerCase(req.params.postName);
   var search=await journalElement.find({},{_id:0,title:1,content:1})
+  var commentSearch=await commentModel.find({},{_id:0,name:1,comment:1})
+  commentSearch.forEach(function(comment){
+    
+  
   search.forEach(function(post){
     const storedTitle = _.lowerCase(post.title);
 
     if (storedTitle === requestedTitle) {
       res.render("post", {
         title: post.title,
-        content: post.content
+        content: post.content,
+        name:comment.name,
+        comment:comment.comment
       });
     }
   });
 
 });
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.listen(3000, function() {
   console.log("Server started on port 3000");
