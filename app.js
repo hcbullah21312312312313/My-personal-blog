@@ -146,10 +146,12 @@ app.get('/admin',async function(req,res){
 app.listen(process.env.PORT || 3000, function () {
   console.log("Server started on port 3000");
 });
+let date=Date()
+let day=date.getDay();
 const messegeSchema=new mongoose.Schema({
   name:String,
   messege:String,
-  createdAt:Date
+  time:Date
 })
 const messeges= mongoose.model('Messege',messegeSchema)
 app.post('/', function (req, res) {
