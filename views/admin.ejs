@@ -9,7 +9,7 @@
         <div class="mt-1" style="margin-bottom: 2rem;">
         <a href="http://" class="btn btn-dark mr-3" >Home</a>
         <a href="http://" class="btn btn-dark mr-3" >Posts</a>
-        <a href="http://" class="btn btn-dark mr-3" >Messages</a>
+        <a href="/messages" class="btn btn-dark mr-3" >Messages</a>
         <a href="http://" class="btn btn-dark mr-3" >Logout</a>
     </div>
     
@@ -63,19 +63,5 @@
               
         </div>
         <hr>
-        <div class="row">
-            <div class="col-md-12 ">
-              <h3>Previous comments</h3>
-              <hr>
-              <% messages.forEach(messege => {%>
-              <div  class="media shadow-sm p-3 mb-2 bg-light rounded">
-                <img class="mr-3" src="/img/avatar7.png" alt="Generic placeholder image">
-                <div class="media-body">
-                  <h5 class="mt-0"><%= messege.name %></h5>
-                  <p> <%= messege.messege %> </p>
-                </div>
-              </div>
-              <% }) %>
-            </div>
-          </div> 
+        
         <%- include("partials/footer"); -%>

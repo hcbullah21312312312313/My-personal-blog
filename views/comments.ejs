@@ -1,0 +1,19 @@
+<%- include("partials/adminheader"); -%>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 ">
+          <h3>Previous comments</h3>
+          <hr>
+          <% comments.forEach(comment => {%>
+          <div  class="media shadow-sm p-3 mb-2 bg-light rounded">
+            <img class="mr-3" src="/img/avatar7.png" alt="Generic placeholder image">
+            <div class="media-body">
+              <h5 class="mt-0"><%= comment.firstName%></h5>
+              <p> <%= comment.opinion%> </p>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+      </div> 
+</div>
+<%- include("partials/footer"); -%>

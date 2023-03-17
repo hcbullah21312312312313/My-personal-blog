@@ -3,7 +3,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require("lodash");
-
+const date = require(__dirname + "/date.js");
+let day=date.getDay();
 const homeStartingContent =
   "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
 const aboutContent =
@@ -79,11 +80,9 @@ const commentsSchema = new mongoose.Schema({
   username: String,
   opinion: String,
   title: String,
-  time:{
-    type: Date,
-    default: Date.now,
+  time:String
   }
-});
+);
 const commentModel = mongoose.model("Comment", commentsSchema);
 app.post("/post", async function (req, res) {
   const requestedTitle = _.lowerCase(req.params.postName);
@@ -96,6 +95,7 @@ app.post("/post", async function (req, res) {
     username: username,
     opinion: comments,
     title: titleq,
+    time:day
   });
 
   newComment.save().then(() => console.log("posted"));
@@ -113,7 +113,7 @@ app.get("/posts/:postName", async function (req, res) {
   });
   var commentSearchRaw = await commentModel.find(
     { title: requestedTitlez },
-    { _id: 0, firstName: 1, opinion: 1, title: 1 }
+    { _id: 0, firstName: 1, opinion: 1, title: 1 ,time:1}
   );
   var commentSearch = [];
   commentSearchRaw.forEach(function (comment) {
@@ -146,12 +146,11 @@ app.get('/admin',async function(req,res){
 app.listen(process.env.PORT || 3000, function () {
   console.log("Server started on port 3000");
 });
-let date=Date()
-let day=date.getDay();
+
 const messegeSchema=new mongoose.Schema({
   name:String,
   messege:String,
-  time:Date
+  time:String
 })
 const messeges= mongoose.model('Messege',messegeSchema)
 app.post('/', function (req, res) {
@@ -160,8 +159,43 @@ app.post('/', function (req, res) {
   const newMessege=new messeges({
     name:name,
     messege:messege,
+    time:day
   })
+
   console.log(name)
   newMessege.save().then(() => console.log("The message is sent to the server"));
   res.redirect('/')
 })
+app.get('/comments',async function(req, res) {
+  const commentsScreen=await commentModel.find({}).sort({_id: -1})
+    res.render('comments', {comments:commentsScreen})
+})
+
+// Define global variables
+var titleFinal = '';
+
+// Define messagesAll route
+app.get("/messages/:msgName", async function (req, res) {
+  const requestedTitle = _.lowerCase(req.params.msgName);
+  var messagesScreen = await messeges.find({}, {});
+
+  messagesScreen.forEach(function (msg) {
+    const storedTitle = _.lowerCase(msg.name);
+
+    if (storedTitle === requestedTitle) {
+      
+      res.render("msg", {
+        name: msg.name,
+        message: msg.messege,
+        time: msg.time,
+      });
+    }
+  });
+});
+
+// Define messages route
+app.get("/messages", async function (req, res) {
+  const messagesScreen = await messeges.find({}).sort({ _id: -1 });
+  res.render("messeges", { messages: messagesScreen, name: titleFinal });
+});
+
