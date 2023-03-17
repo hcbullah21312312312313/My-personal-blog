@@ -2,7 +2,16 @@ html {
   min-height: 100%;
   position: relative;
 }
-
+.nav-link a:hover{
+  color:white !important;
+}
+.containerx{
+  padding: 0px;
+  
+}
+.wallpaper{
+  width: 100%;
+}
 .container-fluid {
     padding-top: 70px;
     padding-bottom: 70px;
@@ -118,3 +127,5 @@ html {
 .media-comment {
   margin-top:20px
 }
+
+/* Footer section */
