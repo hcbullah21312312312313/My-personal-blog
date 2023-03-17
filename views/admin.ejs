@@ -1,0 +1,81 @@
+<%- include("partials/adminheader"); -%>
+    <div>
+        <img class="wallpaper" src="img/wallpaperAdmin.jpg" alt="">
+    </div>
+        <div style="text-align: center;">
+             <img height="200px" width='200px' style="margin-top: -8rem;margin-left: auto;margin-right: auto;"src="img/profile.png" alt="">
+            <h2 style="text-align: center;margin-top: 1rem;margin-left:2rem;">Welcome Haseeb Ullah Tarakai</h2>
+        <br>
+        <div class="mt-1" style="margin-bottom: 2rem;">
+        <a href="http://" class="btn btn-dark mr-3" >Home</a>
+        <a href="http://" class="btn btn-dark mr-3" >Posts</a>
+        <a href="http://" class="btn btn-dark mr-3" >Messages</a>
+        <a href="http://" class="btn btn-dark mr-3" >Logout</a>
+    </div>
+    
+    </div>
+        <div class="container-fluid">
+            <div class="">
+                <div class="row">
+                    <div class="col col-lg-6">
+                        
+                <div class="row">
+                  <div class="col-md-12 ">
+                    <h3>Previous comments</h3>
+                    <hr>
+                    <% comments.forEach(comment => {%>
+                    <div  class="media shadow-sm p-3 mb-2 bg-light rounded">
+                      <img class="mr-3" src="/img/avatar7.png" alt="Generic placeholder image">
+                      <div class="media-body">
+                        <h5 class="mt-0"><%= comment.firstName%></h5>
+                        <p> <%= comment.opinion%> </p>
+                      </div>
+                    </div>
+                    <% }) %>
+                  </div>
+                </div> 
+                    
+                </div>
+                <div class="col col-lg-6">
+                    <section class="container">
+                        <h3>Previous Posts</h3>
+                        <hr>
+                        <div class="row">
+                            <%PreviousPosts.forEach(post => { %>
+                          <div class="col-lg-6">
+                            <div class="card mb-4">
+                              <img src="https://via.placeholder.com/350x200" class="card-img-top" alt="...">
+                              <div class="card-body">
+                                <h5 class="card-title"><%= post.title %></h5>
+                                <p class="card-text"><%= post.content.substring(0,100) %></p>
+                                <a href="/posts/<%=post.title%>" class="btn btn-primary">Read more</a>
+                              </div>
+                            </div>
+                          </div>
+                          <% }); %>
+                        </div>
+                      </section>
+                      
+                </div> 
+                </div>
+                
+              </div>
+              
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12 ">
+              <h3>Previous comments</h3>
+              <hr>
+              <% messages.forEach(messege => {%>
+              <div  class="media shadow-sm p-3 mb-2 bg-light rounded">
+                <img class="mr-3" src="/img/avatar7.png" alt="Generic placeholder image">
+                <div class="media-body">
+                  <h5 class="mt-0"><%= messege.name %></h5>
+                  <p> <%= messege.messege %> </p>
+                </div>
+              </div>
+              <% }) %>
+            </div>
+          </div> 
+        <%- include("partials/footer"); -%>

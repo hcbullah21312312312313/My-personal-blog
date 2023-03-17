@@ -1,28 +1,39 @@
-
 <%- include("partials/header"); -%>
-<div style="margin-bottom: 5rem;">
-<img class="wallpaper" src="img/wallpaper.jpg" alt="">
-</div>
-<div class="container">
-  <div>  
-  <h1>Home</h1>
-    <p> <%= startingContent %> </p>
+  <div style="margin-bottom: 5rem;">
+    <img class="wallpaper" src="img/wallpaper.jpg" alt="">
   </div>
+  <div class="container">
+    <div>
+      <h1>Haseeb Ullah Tarakai</h1>
+      <p> Decent Designing is a platform I created to showcase my work in both graphic designing and development. I
+        first came up with the idea in mid-2019 and initially launched it on Facebook. As I continued to grow and hone
+        my skills, I realized that I needed a more permanent home for my work. So, I decided to create a website for
+        Decent Designing.
 
-  <%  posts.forEach(function(post){ %>
-    <div class="mb-5 shadow-sm mt-5 p-3 mb-5 bg-white rounded">
-    <h2 class="mt-3"><%=post.title%></h2>
-    <p>
-    <%=post.content.substring(0, 600)%>
-    <br><a  href="/posts/<%=post.title%>"><span class="btn btn-outline-dark mt-4">Read more</span></a>
-    </p>
-    <div class="pt-3">
-    <a href="#" class="fa fa-facebook"></a>
-    <a href="#" class="fa fa-twitter"></a>
-    <a href="#" class="fa fa-instagram"></a>
-      </div>
+        Having a website has allowed me to showcase my projects in a more professional and accessible manner. I can now
+        easily share my work with others and receive feedback from a wider audience.I believe it was a worthwhile
+        endeavor.
+
+        Overall, Decent Designing is a platform that I am proud to call my own. It has allowed me to share my passion
+        for design and development with others and has helped me grow both personally and professionally. </p>
     </div>
-    <% }) %>
+
+    <% posts.forEach(function(post){ %>
+      <div class="mb-5 shadow-sm mt-5 p-3 mb-5 bg-white rounded">
+        <h2 class="mt-3">
+          <%=post.title%>
+        </h2>
+        <p>
+          <%=post.content.substring(0, 600)%>
+            <br><a href="/posts/<%=post.title%>"><span class="btn btn-outline-dark mt-4">Read more</span></a>
+        </p>
+        <div class="pt-3">
+          <a href="#" class="fa fa-facebook"></a>
+          <a href="#" class="fa fa-twitter"></a>
+          <a href="#" class="fa fa-instagram"></a>
+        </div>
+      </div>
+      <% }) %>
   </div>
 
-<%- include("partials/footer"); -%>
+  <%- include("partials/footer"); -%>
