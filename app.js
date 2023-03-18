@@ -57,7 +57,7 @@ app.get("/contact", function (req, res) {
   res.render("contact", { contactContent: contactContent });
 });
 
-app.get("/compose", function (req, res) {
+app.get("/composesecure", function (req, res) {
   res.render("compose");
 });
 
@@ -133,7 +133,7 @@ app.get("/posts/:postName", async function (req, res) {
     }
   });
 });
-app.get('/admin',async function(req,res){
+app.get('/adminsecure',async function(req,res){
   let netComments=[]
   const comments=await commentModel.find({}).sort({_id: -1}).limit(10);
   comments.forEach(function(comment){
@@ -173,17 +173,17 @@ app.post('/', function (req, res) {
   newMessege.save().then(() => console.log("The message is sent to the server"));
   res.redirect('/')
 })
-app.get('/comments',async function(req, res) {
+app.get('/commentssecure',async function(req, res) {
   const commentsScreen=await commentModel.find({}).sort({_id: -1})
     res.render('comments', {comments:commentsScreen})
 })
 
 // Define messages route
-app.get("/messages", async function (req, res) {
+app.get("/messagessecure", async function (req, res) {
   const messagesScreen = await messeges.find({}).sort({ _id: -1 });
   res.render("messeges", { messages: messagesScreen });
 });
-app.get("/posts", async function (req, res) {
+app.get("/postssecure", async function (req, res) {
   res.render("previousPosts", {
     posts: await journalElement.find({}, { _id: 0, title: 1, content: 1 }).sort({_id:-1})
   });
