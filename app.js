@@ -105,7 +105,6 @@ app.post("/post", async function (req, res) {
 app.get("/posts/:postName", async function (req, res) {
   const requestedTitle = _.lowerCase(req.params.postName);
   const requestedTitlez = titleCase(requestedTitle);
-
   var search = await journalElement.find({}, { _id: 0, title: 1, content: 1 });
   var titleList = [];
   search.forEach(function (POST) {
@@ -113,12 +112,14 @@ app.get("/posts/:postName", async function (req, res) {
   });
   var commentSearchRaw = await commentModel.find(
     { title: requestedTitlez },
-    { _id: 0, firstName: 1, opinion: 1, title: 1 ,time:1}
+    { _id: 0, firstName: 1, opinion: 1, title: 1 }
   );
   var commentSearch = [];
   commentSearchRaw.forEach(function (comment) {
     commentSearch.push(comment);
+    
   });
+
   search.forEach(function (post) {
     const storedTitle = _.lowerCase(post.title);
 
@@ -127,21 +128,23 @@ app.get("/posts/:postName", async function (req, res) {
       res.render("post", {
         title: titleFinal,
         content: post.content,
-        comments: commentSearch,
+        comments: commentSearchRaw,
       });
     }
   });
 });
-
 app.get('/admin',async function(req,res){
   let netComments=[]
   const comments=await commentModel.find({}).sort({_id: -1}).limit(10);
   comments.forEach(function(comment){
      netComments.push(comment);
   })
+  
   const messege=await messeges.find({}).sort({_id: -1}).limit(10)
+
   const previousPosts=[]
   const  prevPosts=await journalElement.find({}).sort({_id: -1}).limit(4)
+  console.log(msgsnu)
   res.render('admin',{comments: netComments,PreviousPosts:prevPosts,messages:messege});})
 app.listen(process.env.PORT || 3000, function () {
   console.log("Server started on port 3000");
@@ -150,18 +153,22 @@ app.listen(process.env.PORT || 3000, function () {
 const messegeSchema=new mongoose.Schema({
   name:String,
   messege:String,
-  time:String
+  time:String,
+  email:String
 })
 const messeges= mongoose.model('Messege',messegeSchema)
+msgsnu=messeges.countDocuments({})
+
 app.post('/', function (req, res) {
   const name=req.body.name
+  const email=req.body.email
   const messege=req.body.message
   const newMessege=new messeges({
     name:name,
     messege:messege,
+    email:email,
     time:day
   })
-
   console.log(name)
   newMessege.save().then(() => console.log("The message is sent to the server"));
   res.redirect('/')
@@ -171,31 +178,12 @@ app.get('/comments',async function(req, res) {
     res.render('comments', {comments:commentsScreen})
 })
 
-// Define global variables
-var titleFinal = '';
-
-// Define messagesAll route
-app.get("/messages/:msgName", async function (req, res) {
-  const requestedTitle = _.lowerCase(req.params.msgName);
-  var messagesScreen = await messeges.find({}, {});
-
-  messagesScreen.forEach(function (msg) {
-    const storedTitle = _.lowerCase(msg.name);
-
-    if (storedTitle === requestedTitle) {
-      
-      res.render("msg", {
-        name: msg.name,
-        message: msg.messege,
-        time: msg.time,
-      });
-    }
-  });
-});
-
 // Define messages route
 app.get("/messages", async function (req, res) {
   const messagesScreen = await messeges.find({}).sort({ _id: -1 });
   res.render("messeges", { messages: messagesScreen, name: titleFinal });
 });
-
+app.get("/posts", async function (req, res) {
+  const messagesScreen = await messeges.find({}).sort({ _id: -1 });
+  res.render("messeges", { messages: messagesScreen, name: titleFinal });
+});

@@ -18,43 +18,79 @@
             <div class="">
                 <div class="row">
                     <div class="col col-lg-6">
-                        
-                <div class="row">
-                  <div class="col-md-12 ">
-                    <h3>Previous comments</h3>
-                    <hr>
-                    <% comments.forEach(comment => {%>
-                    <div  class="media shadow-sm p-3 mb-2 bg-light rounded">
-                      <img class="mr-3" src="/img/avatar7.png" alt="Generic placeholder image">
-                      <div class="media-body">
-                        <h5 class="mt-0"><%= comment.firstName%></h5>
-                        <p> <%= comment.opinion%> </p>
-                      </div>
-                    </div>
-                    <% }) %>
-                  </div>
-                </div> 
-                    
-                </div>
-                <div class="col col-lg-6">
-                    <section class="container">
-                        <h3>Previous Posts</h3>
-                        <hr>
+                      <h2>Comments</h2>
+                      <hr>
+                      <div class="container">
                         <div class="row">
-                            <%PreviousPosts.forEach(post => { %>
-                          <div class="col-lg-6">
-                            <div class="card mb-4">
-                              <img src="https://via.placeholder.com/350x200" class="card-img-top" alt="...">
-                              <div class="card-body">
-                                <h5 class="card-title"><%= post.title %></h5>
-                                <p class="card-text"><%= post.content.substring(0,100) %></p>
-                                <a href="/posts/<%=post.title%>" class="btn btn-primary">Read more</a>
+                        <div class="col-sm-12">
+                          <div class="chat_container">
+                            <div class="job-box">
+                              <div class="job-box-filter">
+                                <div class="row">
+                                  <div class="col-md-6 col-sm-6">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="inbox-message">
+                                <ul>
+                                  <% comments.forEach(comment => {%>
+                                  <li>
+                                    <a href="#">
+                                      <div class="message-avatar">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
+                                      </div>
+                                      <div class="message-body">
+                                        <div class="message-body-heading">
+                                          <h5><%= comment.firstName%></h5>
+                                          <span><%= messege.time%></span>
+                                          
+                                        </div>
+                                        <p><%= comment.opinion%></p>
+                                        <span>Email: <%= messege.email%></span>
+                                      </div>
+                                    </a>
+                                  </li>
+                                  <% }) %>
+                                </ul>
                               </div>
                             </div>
                           </div>
-                          <% }); %>
                         </div>
-                      </section>
+                        </div>
+                        </div>
+                    
+                </div>
+                <div class="col col-lg-6">
+                  <h3>Recent Post</h3>
+                  <hr>
+                    <div class="row">
+                       <!-- .Col ends here -->
+                        <div class="col-lg-12">
+                            <div class="sidebar widget">
+                              <%PreviousPosts.forEach(post => { %>
+                                <ul>
+                                  <li>
+                                      <div class="sidebar-thumb bg-light">
+                                          <img class="animated rollIn bg-light" src="img/recent.png" alt="" />
+                                      </div><!-- .Sidebar-thumb -->
+                                      <div class="sidebar-content">
+                                          <h5 class="animated bounceInRight"><a href="/posts/<%=post.title%>"><%= post.title %></a></h5>
+                                      </div><!-- .Sidebar-thumb -->
+                                      <div class="sidebar-meta">
+                                          <span class="time" ><i class="fa fa-clock-o"></i> Aug 27, 2015</span>
+                                          <span class="comment"><i class="fa fa-comment"></i> 10 comments</span>
+                                      </div><!-- .Sidebar-meta ends here -->
+                                  </li><!-- .Li ends here -->
+                                </ul><!-- .Ul ends here -->
+                                <% }); %>
+                            </div><!-- .Widget ends here -->
+                        </div><!-- .Col ends here -->
+                      
+                    </div><!-- .Row ends here -->
+                  
+                  
+                  
+                  
                       
                 </div> 
                 </div>

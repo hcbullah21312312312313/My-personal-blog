@@ -35,14 +35,16 @@
                   <li>
                     <a href="#">
                       <div class="message-avatar">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
                       </div>
                       <div class="message-body">
                         <div class="message-body-heading">
                           <h5><%= messege.name%> <span class="unread">Unread</span></h5>
-                          <span>7 hours ago</span>
+                          <span><%= messege.time%></span>
+                          
                         </div>
-                        <p>Hello, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolor....</p>
+                        <p><%= messege.messege %></p>
+                        <span>Email: <%= messege.email%></span>
                       </div>
                     </a>
                   </li>
