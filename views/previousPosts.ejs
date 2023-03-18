@@ -1,0 +1,21 @@
+<%- include("partials/adminheader"); -%>
+<div class="container">
+  <h1 class="mt-5">Previous Posts</h1>
+<% posts.forEach(function(post){ %>
+    <div class="mb-5 shadow-sm mt-5 p-3 mb-5 bg-white rounded">
+      <h2 class="mt-3">
+        <%=post.title%>
+      </h2>
+      <p>
+        <%=post.content.substring(0, 600)%>
+          <br><a href="/posts/<%=post.title%>"><span class="btn btn-outline-dark mt-4">Read more</span></a>
+      </p>
+      <div class="pt-3">
+        <a href="#" class="fa fa-facebook"></a>
+        <a href="#" class="fa fa-twitter"></a>
+        <a href="#" class="fa fa-instagram"></a>
+      </div>
+    </div>
+    <% }) %>
+</div>
+<%- include("partials/footer"); -%>

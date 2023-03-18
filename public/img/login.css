@@ -1,0 +1,19 @@
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+body {
+  background-image: url('download1.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media (max-width: 1100px) {
+  body {
+    background-image: none;
+    background-color: black;
+  }
+}

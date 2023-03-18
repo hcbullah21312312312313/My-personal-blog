@@ -181,9 +181,31 @@ app.get('/comments',async function(req, res) {
 // Define messages route
 app.get("/messages", async function (req, res) {
   const messagesScreen = await messeges.find({}).sort({ _id: -1 });
-  res.render("messeges", { messages: messagesScreen, name: titleFinal });
+  res.render("messeges", { messages: messagesScreen });
 });
 app.get("/posts", async function (req, res) {
-  const messagesScreen = await messeges.find({}).sort({ _id: -1 });
-  res.render("messeges", { messages: messagesScreen, name: titleFinal });
+  res.render("previousPosts", {
+    posts: await journalElement.find({}, { _id: 0, title: 1, content: 1 }).sort({_id:-1})
+  });
 });
+const loginSchema=new mongoose.Schema({
+  email:String,
+  password:String
+})
+const loginModel=mongoose.model('Login',loginSchema)
+app.get('/login',function(req,res){
+  
+  res.render('login')
+})
+app.post('/login', async function (req,res){
+  const email=req.body.email
+  const password=req.body.password
+  const emailData='haseebullah7aand7b@gmail.com'
+  const passwordData='03143110561'
+  if (email==emailData && password==passwordData){
+    res.redirect('admin')
+  }
+  else{
+    res.redirect('/loginFailed')
+  }
+})

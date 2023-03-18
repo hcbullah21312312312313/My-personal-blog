@@ -8,7 +8,7 @@
         <br>
         <div class="mt-1" style="margin-bottom: 2rem;">
         <a href="http://" class="btn btn-dark mr-3" >Home</a>
-        <a href="http://" class="btn btn-dark mr-3" >Posts</a>
+        <a href="/posts" class="btn btn-dark mr-3" >Posts</a>
         <a href="/messages" class="btn btn-dark mr-3" >Messages</a>
         <a href="http://" class="btn btn-dark mr-3" >Logout</a>
     </div>
@@ -18,21 +18,16 @@
             <div class="">
                 <div class="row">
                     <div class="col col-lg-6">
-                      <h2>Comments</h2>
+                      <h2 >Comments</h2>
                       <hr>
                       <div class="container">
                         <div class="row">
                         <div class="col-sm-12">
                           <div class="chat_container">
                             <div class="job-box">
-                              <div class="job-box-filter">
-                                <div class="row">
-                                  <div class="col-md-6 col-sm-6">
-                                  </div>
-                                </div>
-                              </div>
+                              
                               <div class="inbox-message">
-                                <ul>
+                                <ul style="background-color:#f2f2f2;">
                                   <% comments.forEach(comment => {%>
                                   <li>
                                     <a href="#">
@@ -41,12 +36,12 @@
                                       </div>
                                       <div class="message-body">
                                         <div class="message-body-heading">
-                                          <h5><%= comment.firstName%></h5>
-                                          <span><%= messege.time%></span>
+                                          <h5><%= comment.firstName%> <span class="unread">Unread</span></h5>
+                                          <span><%= comment.time%></span>
                                           
                                         </div>
-                                        <p><%= comment.opinion%></p>
-                                        <span>Email: <%= messege.email%></span>
+                                        <p><%= comment.opinion %></p>
+                                        
                                       </div>
                                     </a>
                                   </li>
@@ -61,7 +56,7 @@
                     
                 </div>
                 <div class="col col-lg-6">
-                  <h3>Recent Post</h3>
+                  <h3 class="mt-1">Recent Post</h3>
                   <hr>
                     <div class="row">
                        <!-- .Col ends here -->
