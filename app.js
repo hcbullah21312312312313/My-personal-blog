@@ -203,7 +203,7 @@ app.post('/login', async function (req,res){
   const emailData='haseebullah7aand7b@gmail.com'
   const passwordData='03143110561'
   if (email==emailData && password==passwordData){
-    res.redirect('admin')
+    res.redirect('adminsecure')
   }
   else{
     res.redirect('/loginFailed')
